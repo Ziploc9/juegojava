@@ -19,6 +19,10 @@ public class Personaje{
 
     }
 
+    public Personaje(){
+
+    }
+
     /**---Get&Set---*/
     public String getNombre() {
         return nombre;
