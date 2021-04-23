@@ -25,7 +25,7 @@ public class Recurso {
         this.resistencia = resistencia;
     }
 
-    public boolean isEstado() {
+    public boolean getEstado() {
         return estado;
     }
 

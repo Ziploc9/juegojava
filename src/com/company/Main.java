@@ -6,33 +6,55 @@ import Consumibles.*;
 import Utiles.*;
 
 import java.awt.desktop.SystemSleepEvent;
+import java.nio.charset.StandardCharsets;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
-
+    /**----- Meter los datos en un arreglo-------*/
     public static void main(String[] args) {
 
         correrjuego();
-
     }
 
     public static void menuStart(){
         System.out.println("\n1- Iniciar juego");
-        System.out.println("2- Guardar partida");
-        System.out.println("3- Creditos");
-        System.out.println("4- Salir juego\n");
+        System.out.println("2- Controles");
+        System.out.println("3- Guardar partida");
+        System.out.println("4- Creditos");
+        System.out.println("5- Salir juego\n");
+    }
+
+    public static void controles(){
+        Scanner scan = new Scanner(System.in);
+        System.out.println("\nPara jugar sera algo basico..Tendras que elegir entre algunas opciones '1-4' y presionar enter para skipear textos..");
+        System.out.println("Usa 'p' cuando quieras ir al menu principal.");
+        System.out.println("Usa 'l' para abrir o cerrar la casa");
+        System.out.println("Usa 'i' para abrir el inventorio");
+        try
+        {
+            String seguir = scan.nextLine();
+        }
+        catch(Exception ignored){}
+
     }
     
     public static void menuJuego(){
-        System.out.println("\n1- Ir a la casa.");
+        System.out.println("\n1- Ir a Mimir.");
         System.out.println("2- Buscar madera.");
         System.out.println("3- Buscar piedra.");
-        System.out.println("4- Ir a pescar");
+        System.out.println("4- Ir a la huerta");
+        System.out.println("5- Ir a pescar");
     }
 
     public static void correrjuego(){
-        int option=0;
-        Personaje personaje = new Personaje("Chaldu",500,20,100,2.4);
+        int option = 0;
+        Jugador personaje = new Jugador("Chaldu",200,10,50,10.5, 50,50);
+        ArrayList<Jugador> datos = new ArrayList<>();
+        datos.add(personaje);
         Scanner scan = new Scanner(System.in);
 
         while (option != 11199207){
@@ -44,8 +66,6 @@ public class Main {
             switch (option){
 
                 case 1:
-
-                    scan.nextLine();
                     crearPersonaje(personaje,scan);
                     System.out.println("\nErase en 2022 un pueblo alejado llamado 'Apru ebalo' en Hungria. Ya casi no tenia habitantes..");
                     System.out.println("\nDebido a una extraña fabula que se habia originado sobre la luz mala que aparecia a la noche..\n");
@@ -62,17 +82,46 @@ public class Main {
                     catch(Exception ignored){}
                     System.out.println("\n Desempacaste y sales afuera..");
 
-    /**Switch inicia rol */
+    /*Switch inicia rol */
+                while (option != 27){
+                    info(datos);
                     menuJuego();
                     System.out.print("Elijes: ");
                     option = scan.nextInt();
                     switch(option){
 
-                        case 1:
-
+                        case 1:// Dormir
+                            scan.nextLine();
+                            System.out.println("\nEntraste a tu casa..¿Quieres cerrarla? Si | No");
+                            String decidir = scan.nextLine();
+                            if("Si".equals(decidir) || "s".equals(decidir) || "si".equals(decidir) || "S".equals(decidir)){
+                                personaje.cerrarCasa(decidir);
+                                if(personaje.dormir() == 0){
+                                    System.out.println("\nCerraste tu casa con exito..");
+                                    System.out.println("Haciendo la durmision...");
+                                    System.out.println("..Despiertas y sales de tu casa..");
+                                }else {
+                                    System.out.println("\nCerraste tu casa con exito pero..");
+                                    System.out.println("No tienes sueño, te quedas afuera disfrutando de lo que odian los otakus y programadores..el sol.");
+                                }
+                            }else{
+                                if(personaje.dormir() == 0){
+                                    System.out.println("\nDejaste la puerta sin trabas..muy rudo de tu parte..");
+                                    System.out.println("Te animas a dormir...");
+                                }else {
+                                    System.out.println("\nDejaste la puerta abierta y no tienes sueño..");
+                                    System.out.println("Te quedaras afuera disfrutando de lo que odian los otakus y programadores..el sol.");
+                                }
+                            }
                             break;
 
-                        case 2:
+                        case 2:// Buscar madera
+                            System.out.println("\nMiras los arboles y caminas hacia alli..");
+                            gastarEnergia(personaje);
+                            System.out.println("Tomas el hacha y comenzas a talar..");
+                            gastarEnergia(personaje);
+
+
 
                             break;
 
@@ -82,6 +131,14 @@ public class Main {
 
                         case 4:
 
+                            break;
+
+                        case 5:
+
+                            break;
+
+                        case 6:
+                                option = 27;
                             break;
 
                             default:
@@ -96,14 +153,20 @@ public class Main {
                                 enemy.setVida(enemy.getVida()+100);
                                 break;
                     }
-                    
-                    break;
+                 }
 
+                    break;
+        /*Switch termino rol */
                 case 2:
-                    System.out.println("¿En serio elegiste esto? ¿Pensas que mi creador es capaz de darme esa habilidad?.");
+                    controles();
+
                     break;
 
                 case 3:
+                    System.out.println("¿En serio elegiste esto? ¿Pensas que mi creador es capaz de darme esa habilidad?.");
+                    break;
+
+                case 4:
                     System.out.println("Mi creador es el gran Dios Ziploc9.\n");
                     String seguir;
                     Scanner pausa = new Scanner(System.in);
@@ -117,7 +180,7 @@ public class Main {
                     System.out.println( "¿Estamos a salvo? busque entre sus datos y encontre que se llama Martin Israel Vallejo Torres va a la Comision 3, no le digas, queda entre nosotros.");
                     break;
 
-                case 4:
+                case 5:
                     option = 11199207;
                     System.out.println("Adios vuelvas prontos.. Lo siento, mi creador ve mucho Los Simpson.");
                     break;
@@ -133,19 +196,8 @@ public class Main {
         }
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
     public static void crearPersonaje(Personaje person,Scanner scan){
+        scan.nextLine();
         System.out.println("Bienvenido a Farmer Warrior (a mi creador no se le ocurrio algo mejor) ¿Quiere ponerle un nombre a su personaje? Yes | No\n");
         String option = scan.nextLine();
         if("Yes".equals(option) || "yes".equals(option) || "y".equals(option) || "Y".equals(option)){
@@ -167,6 +219,27 @@ public class Main {
                 String seguir = scan.nextLine();
             }
             catch(Exception ignored){}
+        }
+    }
+
+    public static void gastarEnergia(Jugador personaje){
+        personaje.setCansancio(personaje.getCansancio()-0.72);
+        personaje.setHambre(personaje.getHambre()-0.50);
+        if(personaje.getCansancio()<=0 || personaje.getHambre() <= 0){
+            personaje.setResistencia(personaje.getResistencia()-20);
+            personaje.setVelocidad(personaje.getVelocidad()-1.5);
+        }else if(personaje.getResistencia()<=0){
+            personaje.setVida(personaje.getVida()-30);
+        }
+    }
+
+    public static void inventario(Jugador pers){
+
+    }
+
+    public static void info(ArrayList datos){
+        for (Jugador j:datos){
+            System.out.println(j);
         }
     }
 
