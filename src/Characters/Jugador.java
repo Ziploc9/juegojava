@@ -1,15 +1,14 @@
 package Characters;
 
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Jugador extends Personaje {
 
-    private double cansancio;
-    private double hambre;
+    private float cansancio;
+    private float hambre;
     private boolean lock;
 
-    public Jugador(String nombre, int vida, int damage, int resistencia, double velocidad, double cansancio, double hambre){
+    public Jugador(String nombre, int vida, int damage, int resistencia, float velocidad, float cansancio, float hambre){
         super(nombre,vida,damage,resistencia,velocidad);
         this.cansancio = cansancio;
         this.hambre = hambre;
@@ -17,19 +16,19 @@ public class Jugador extends Personaje {
 
 
     /**---Get&Set---*/
-    public double getCansancio() {
+    public float getCansancio() {
         return cansancio;
     }
 
-    public void setCansancio(double cansancio) {
+    public void setCansancio(float cansancio) {
         this.cansancio = cansancio;
     }
 
-    public double getHambre() {
+    public float getHambre() {
         return hambre;
     }
 
-    public void setHambre(double hambre) {
+    public void setHambre(float hambre) {
         this.hambre = hambre;
     }
 
@@ -45,7 +44,7 @@ public class Jugador extends Personaje {
     /**---Methods---*/
 
    public int dormir(){
-       double suenio = getCansancio();
+       int suenio = 50;
        if(getCansancio()< suenio){
            setCansancio(suenio);
         return 0;
@@ -79,7 +78,7 @@ public class Jugador extends Personaje {
     }
 
     public int comer(){
-        double fullHambre = getHambre();
+        int fullHambre = 50;
         if(getHambre()< fullHambre){
             setCansancio(fullHambre);
             return 0;
@@ -110,8 +109,8 @@ public class Jugador extends Personaje {
        s.append("Armadura [").append(getResistencia()).append("/50] ");
        s.append("Damage [").append(getDamage()).append("/200]");
        s.append("Hambre [").append(getHambre()).append("/50.0] ");
-       s.append("Sueño [").append(getCansancio()).append("/").append(sue);
-       s.append("Velocidad [").append(getVelocidad()).append("/10.5] ");
+       s.append("Sueño [").append(getCansancio()).append("/50.0] ");
+       s.append("Velocidad [").append(getVelocidad()).append("/10.2] ");
 
        return s.toString();
     }

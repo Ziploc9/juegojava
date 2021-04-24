@@ -8,9 +8,9 @@ public class Personaje{
     private int vida;
     private int damage;
     private int resistencia;
-    private double velocidad;
+    private float velocidad;
 
-    public Personaje(String nombre, int vida, int damage, int resistencia, double velocidad){
+    public Personaje(String nombre, int vida, int damage, int resistencia, float velocidad){
         this.nombre = nombre;
         this.vida = vida;
         this.damage = damage;
@@ -56,11 +56,11 @@ public class Personaje{
         this.resistencia = resistencia;
     }
 
-    public double getVelocidad() {
+    public float getVelocidad() {
         return velocidad;
     }
 
-    public void setVelocidad(double velocidad) {
+    public void setVelocidad(float velocidad) {
         this.velocidad = velocidad;
     }
 

@@ -14,7 +14,6 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Main {
-    /**----- Meter los datos en un arreglo-------*/
     public static void main(String[] args) {
 
         correrjuego();
@@ -48,14 +47,17 @@ public class Main {
         System.out.println("3- Buscar piedra.");
         System.out.println("4- Ir a la huerta");
         System.out.println("5- Ir a pescar");
+        System.out.println("6- menu principal");
     }
+
+                /**------- Meter info en arraylst----*/
 
     public static void correrjuego(){
         int option = 0;
-        Jugador personaje = new Jugador("Chaldu",200,10,50,10.5, 50,50);
-        ArrayList<Jugador> datos = new ArrayList<>();
-        datos.add(personaje);
+        Jugador personaje = new Jugador("Chaldu",200,10,50, 10.2f, 50,50);
+        Recurso wood = new Recurso("Arbol",0, 15, true, 20,5);
         Scanner scan = new Scanner(System.in);
+        int invWood=0;
 
         while (option != 11199207){
 
@@ -84,7 +86,7 @@ public class Main {
 
     /*Switch inicia rol */
                 while (option != 27){
-                    info(datos);
+                    System.out.println(personaje);
                     menuJuego();
                     System.out.print("Elijes: ");
                     option = scan.nextInt();
@@ -116,10 +118,35 @@ public class Main {
                             break;
 
                         case 2:// Buscar madera
+
                             System.out.println("\nMiras los arboles y caminas hacia alli..");
                             gastarEnergia(personaje);
-                            System.out.println("Tomas el hacha y comenzas a talar..");
-                            gastarEnergia(personaje);
+                            if(wood.isEstado()){
+                                System.out.println("Tomas el hacha y comenzas a talar..");
+                                gastarEnergia(personaje);
+                                System.out.println("Madera disponible ["+wood.getCantRecurso()+"/5] ");
+                                wood.explotarRecurso();
+                                System.out.println("Tienes madera, usa 'g' para guardar o usa 'u' para usar");
+                                scan.nextLine();
+                                String recolect = scan.nextLine();
+                                if("g".equals(recolect)){
+                                    wood.recolectarRecursos("g",invWood);
+                                    System.out.println("Cargas la madera y la apilas en un costado..");
+                                }else if("u".equals(recolect)){
+                                    wood.recolectarRecursos("u",invWood);
+                                }else{
+                                    System.out.println("¿Sos boludo y no tenes huevos? apreta bien la tecla, no me hagas trabajar mas de lo debido..");
+                                }
+
+    /**----Almacenar madera y usar---------*/
+
+                            }else{
+                                System.out.println("\n¿Acaso quieres deforestar todo el lugar? deja que crezcan los arboles, te dan oxigeno.");
+
+
+                            }
+
+
 
 
 
@@ -223,11 +250,11 @@ public class Main {
     }
 
     public static void gastarEnergia(Jugador personaje){
-        personaje.setCansancio(personaje.getCansancio()-0.72);
-        personaje.setHambre(personaje.getHambre()-0.50);
+        personaje.setCansancio(personaje.getCansancio()-1.5f);
+        personaje.setHambre(personaje.getHambre()-0.50f);
         if(personaje.getCansancio()<=0 || personaje.getHambre() <= 0){
             personaje.setResistencia(personaje.getResistencia()-20);
-            personaje.setVelocidad(personaje.getVelocidad()-1.5);
+            personaje.setVelocidad(personaje.getVelocidad()-1.5f);
         }else if(personaje.getResistencia()<=0){
             personaje.setVida(personaje.getVida()-30);
         }
@@ -237,10 +264,5 @@ public class Main {
 
     }
 
-    public static void info(ArrayList datos){
-        for (Jugador j:datos){
-            System.out.println(j);
-        }
-    }
 
 }
