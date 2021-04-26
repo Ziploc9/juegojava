@@ -9,9 +9,8 @@ import java.awt.desktop.SystemSleepEvent;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.ArrayList;
+import java.util.*;
 import java.util.List;
-import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
@@ -57,7 +56,10 @@ public class Main {
         Jugador personaje = new Jugador("Chaldu",200,10,50, 10.2f, 50,50);
         Recurso wood = new Recurso("Arbol",0, 15, true, 20,5);
         Scanner scan = new Scanner(System.in);
-        int invWood=0;
+        Timer timer = new Timer();                  // timer para actualizar el reinicio de recursos cada 5 minutos
+
+
+        int acuWood=0;
 
         while (option != 11199207){
 
@@ -130,25 +132,27 @@ public class Main {
                                 scan.nextLine();
                                 String recolect = scan.nextLine();
                                 if("g".equals(recolect)){
-                                    wood.recolectarRecursos("g",invWood);
+                                   acuWood = wood.recolectarRecursos("g", acuWood);
                                     System.out.println("Cargas la madera y la apilas en un costado..");
                                 }else if("u".equals(recolect)){
-                                    wood.recolectarRecursos("u",invWood);
+                                   acuWood = wood.recolectarRecursos("u", acuWood);
+                                    System.out.println("Agarras las maderas y las usas para mantener caliente tu casa.. ");
                                 }else{
                                     System.out.println("¿Sos boludo y no tenes huevos? apreta bien la tecla, no me hagas trabajar mas de lo debido..");
                                 }
 
-    /**----Almacenar madera y usar---------*/
-
                             }else{
                                 System.out.println("\n¿Acaso quieres deforestar todo el lugar? deja que crezcan los arboles, te dan oxigeno.");
-
-
                             }
 
-
-
-
+                                // reinicio recursos cada 50000 milisegundos = 5 minutos
+                            TimerTask actualizar = new TimerTask() {
+                                @Override
+                                public void run() {
+                                    wood.reiniciarRecurso();
+                                }
+                            };
+                            timer.schedule(actualizar,50000,10000);
 
                             break;
 

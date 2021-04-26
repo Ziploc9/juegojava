@@ -72,21 +72,22 @@ public class Recurso{
 
     /**--Methods--*/
                             //acumula la cant de madera y tiene limite 50
-    public void recolectarRecursos(String check, int invWood){
-        int woodStorage = 50;
-        if ("g".equals(check) && invWood <= woodStorage){
-            invWood++;
-        }else if(invWood > woodStorage){
+    public int recolectarRecursos(String check, int acumuladorWood){
+        int woodMAX = 50;
+        if ("g".equals(check) && acumuladorWood <= woodMAX){
+                acumuladorWood++;
+        }else if(acumuladorWood > woodMAX){
             System.out.println("\nTienes demasiada madera acumulada ¿Acaso no piensas en mi procesador?");
         }
-
-        if("u".equals(check) && invWood > woodStorage) {
-            invWood--;
-        }else if(invWood == 0){
+                                     //va restando 1 segun recurso explotado
+        if("u".equals(check) && acumuladorWood < woodMAX){
+                acumuladorWood--;
+        }else if(acumuladorWood <= 0){
             System.out.println("\nNo tienes madera para usar..");
         }
+        return acumuladorWood;
     }
-                                //va restando 1 segun recurso explotado
+
     public void explotarRecurso(){
         if(this.getCantRecurso() >0){
             this.setCantRecurso(this.getCantRecurso()-1);
@@ -95,8 +96,10 @@ public class Recurso{
         }
     }
 
-    public static void reiniciarRecurso(){
-
+    public void reiniciarRecurso(){
+        if(getCantRecurso() == 0){
+            setCantRecurso(5);
+        }
     }
 
     public boolean crecer() {
