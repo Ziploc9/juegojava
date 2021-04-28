@@ -80,7 +80,7 @@ public class Jugador extends Personaje {
     public int comer(){
         int fullHambre = 50;
         if(getHambre()< fullHambre){
-            setCansancio(fullHambre);
+            setHambre(fullHambre);
             return 0;
         }else{
             return 1;
